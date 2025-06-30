@@ -26,19 +26,21 @@ function App() {
         </div>
 
         <div className='Result-Card'>
-          <p className='Result-Subreddit'>Subreddit</p>
+          <p className='Result-Subreddit'>r/Subreddit</p>
           <h3>Title</h3>
           <div className='Result-Details'>
             <p>0 Upvotes</p>
+            <p>||</p>
             <p>0 Comments</p>
           </div>
         </div>
 
         <div className='Result-Card'>
-          <p className='Result-Subreddit'>Subreddit</p>
+          <p className='Result-Subreddit'>r/Subreddit</p>
           <h3>Title</h3>
           <div className='Result-Details'>
             <p>0 Upvotes</p>
+            <p>||</p>
             <p>0 Comments</p>
           </div>
         </div>
