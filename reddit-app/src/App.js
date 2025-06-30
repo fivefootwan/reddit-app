@@ -7,26 +7,43 @@ function App() {
       <header className="App-header">
         <h1>Reddit App</h1>
         <form className='Search-Bar'>
-          <input placeholder="Input a term" className='Search-Input'/>
-          <select className='Search-Dropdown'> 
-            <option value="default">Default</option>
-            <option value="Option 1">Option 1</option>
-            <option value="Option 2">Option 2</option>
-          </select>
+          <input placeholder="Enter Keyword" className='Search-Input'/>
+          <input placeholder='Find a subreddit' className='Subreddit-Input'/>
           <button type="submit" className="Search-Button">Search</button>
         </form>
       </header>
 
       <div className='Content-Body'>
-        <h2>Results</h2>
-        <div className='Result-Card'>
-          <p>this is</p>
+        <div className="Result-Header">
+          <h2>Results</h2>
+          <select className='Search-Dropdown'> 
+              <option value="hot">🔥 Hot</option>
+              <option value="new">📰 New</option>
+              <option value="top">🏆 Top</option>
+              <option value="controversial">🗣 Controversial</option>
+              <option value="rising">⬆️ Rising</option>
+            </select>
+        </div>
 
+        <div className='Result-Card'>
+          <p className='Result-Subreddit'>Subreddit</p>
+          <h3>Title</h3>
+          <div className='Result-Details'>
+            <p>0 Upvotes</p>
+            <p>0 Comments</p>
+          </div>
+        </div>
+
+        <div className='Result-Card'>
+          <p className='Result-Subreddit'>Subreddit</p>
+          <h3>Title</h3>
+          <div className='Result-Details'>
+            <p>0 Upvotes</p>
+            <p>0 Comments</p>
+          </div>
         </div>
 
       </div>
-
-
     </div>
   );
 }

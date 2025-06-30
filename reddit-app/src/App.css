@@ -48,21 +48,26 @@
 .Search-Input {
   width: 65%;
   min-width: 200px;
+  font-size: 16px;
 }
 
 .Search-Dropdown {
+  min-width: 80px;
+}
+
+.Subreddit-Input{
   width: 10%;
   min-width: 80px;
+  font-size: 16px;
 }
 
 .Search-Button {
   width: 10%;
   min-width: 80px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .Content-Body {
-  width: 100vw;
   min-height: 5vh;
   display: flex;
   flex-direction: column;
@@ -71,11 +76,37 @@
   align-items:flex-start;
   margin-bottom: 20px;
   margin-top: 20px;
-  padding-left: calc(7.5vw - 10px);
+  padding-left: 10%;
+  padding-right: 10%
+}
+
+.Result-Header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .Result-Card {
   width: 65%;
   min-width: 380px;
   background-color: #61dafb;
+  text-align: left;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.Result-Subreddit {
+  margin: 0px;
+}
+
+.Result-Details {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+
+}
+
+.Result-Details p {
+  margin: 0px;
 }
