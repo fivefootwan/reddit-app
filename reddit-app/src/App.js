@@ -59,11 +59,17 @@ function App() {
     setIsTyping(false);  // User clicked a suggestion — disable fetch
   };
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    //fetch logic
+    // fetch results
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Reddit App</h1>
-        <form className='Search-Bar'>
+        <form className='Search-Bar' onSubmit={handleSearchSubmit}>
           <input className='Search-Input' placeholder="Enter Keyword" value={searchedTerm} onChange={(e) => setSearchedTerm(e.target.value)}/>
           <div className='Subreddit'>
             <input 
@@ -99,7 +105,7 @@ function App() {
       <div className='Content-Body'>
         <div className="Result-Header">
           <h2>Results</h2>
-          <select className='Search-Dropdown'> 
+          <select className='Sort-Dropdown'> 
               <option value="hot">🔥 Hot</option>
               <option value="new">📰 New</option>
               <option value="top">🏆 Top</option>
