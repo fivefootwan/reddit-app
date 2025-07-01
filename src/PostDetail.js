@@ -34,7 +34,13 @@ const PostDetail = () => {
     <div className="PostDetail">
       <p>{post.subreddit_name_prefixed}</p>
       <h2>{post.title}</h2>
-      <p>{post.ups} 👍🏻 | {post.num_comments} 💬 comments</p>
+
+      {post.selftext && <p>{post.selftext}</p>} {/* 👉 Show OP's actual content (selftext) */}
+
+      <p>{post.ups} 👍🏻 | {post.num_comments} 💬 comments | <a href={`https://www.reddit.com${post.permalink}`} target="_blank" rel="noopener noreferrer"> {/* 👉 Link to Reddit page */}
+        View on Reddit
+      </a></p>
+
       <div className="Comments">
         {comments.map((comment, i) => (
           <div key={i}>
