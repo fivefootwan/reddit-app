@@ -74,13 +74,13 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
+        <div className="App-header">
           <h1>Reddit App</h1>
           <form className='Search-Bar' onSubmit={handleSearchSubmit}>
             <input className='Search-Input' placeholder="Enter Keyword" value={searchedTerm} onChange={(e) => setSearchedTerm(e.target.value)}/>
             <div className='Subreddit'>
               <input 
-                placeholder='Search in SubReddit' 
+                placeholder='Search SubReddit' 
                 className='Subreddit-Input' 
                 value={subreddit} 
                 onChange={(e) => {
@@ -107,7 +107,7 @@ function App() {
             <button type="submit" className="Search-Button">Search</button>
           </form>
 
-        </header>
+        </div>
 
         <Routes>
           <Route path="/"

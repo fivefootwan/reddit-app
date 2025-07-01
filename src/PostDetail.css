@@ -1,15 +1,22 @@
 .PostDetail {
     padding: 5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
 }
 
-.Subreddit {
+.Subreddit-Post {
     background-color: aquamarine;
 }
 
 .OP-Content {
     border-radius: 10px;
-    border: 1px solid black;
     width: calc(100vw - 20vw);
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: lightgrey;
+    box-shadow: 0 10px 15px rgb(90, 90, 90, 0.5);
 }
 
 .Comments {
@@ -20,7 +27,7 @@
 }
 
 .Comment, .Comment p {
-    background-color: blueviolet;
+    background-color: rgb(231, 231, 231);
     margin-bottom: 10px;
     margin-top: 0;
 }
