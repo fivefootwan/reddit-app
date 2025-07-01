@@ -1,24 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
-import {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchResults } from './resultsSlice';
 
 function App() {
   //resultsSlice
-  const [results, setResults] = useState([]); //array of objects of post results
-  const [isResultLoading,setIsResultLoading] = useState(false); // loading state when results are being fetch
-  const [fetchResultError, setFetchResultError] = useState(null); // in case error and result fetch is unsuccessful
-  const [searchedTerm, setSearchedTerm] = useState(""); // array of the keyword terms inputted by users 
-  const [subreddit, setSubreddit] = useState("");
-  const [subredditSuggestions, setSubredditSuggestions] = useState([]);
-  const [isSubredditLoading, setIsSubredditLoading] = useState(false);
-  const [subredditError, setSubredditError] = useState(null);
-  const [isTyping, setIsTyping] = useState(false); //subreddit is typing
-  const [sort, setSort] = useState("hot"); //default is hot sort
+    const [isResultLoading,setIsResultLoading] = useState(false); // loading state when results are being fetch
+    const [fetchResultError, setFetchResultError] = useState(null); // in case error and result fetch is unsuccessful
+    const [searchedTerm, setSearchedTerm] = useState(""); // array of the keyword terms inputted by users 
+    const [subreddit, setSubreddit] = useState("");
+    const [subredditSuggestions, setSubredditSuggestions] = useState([]);
+    const [isSubredditLoading, setIsSubredditLoading] = useState(false);
+    const [subredditError, setSubredditError] = useState(null);
+    const [isTyping, setIsTyping] = useState(false); //subreddit is typing
+    const [sort, setSort] = useState("hot"); //default is hot sort
 
   //commentsSlice
-  const [comments, setComments] = useState([]) // arr of obj of comments within selected post
-  const [isCommentLoading, setIsCommentLoading] = useState(false); // loading state when comments are being fetch
-  const [fetchCommentError, setFetchCommentError] = useState(null); // in case error and comment fetch is unsuccessful
+    const [comments, setComments] = useState([]) // arr of obj of comments within selected post
+    const [isCommentLoading, setIsCommentLoading] = useState(false); // loading state when comments are being fetch
+    const [fetchCommentError, setFetchCommentError] = useState(null); // in case error and comment fetch is unsuccessful
 
   useEffect(() => { // 👉 run this effect whenever subreddit or isTyping changes
   if (!subreddit || !isTyping) { // 👉 if input is empty or user selected a suggestion, skip fetch
@@ -52,17 +53,19 @@ function App() {
   return () => clearTimeout(debounceTimer); // 👉 cleanup: clear timer if input changes before timer fires
 }, [subreddit, isTyping]); // 👉 run effect when subreddit or isTyping changes
 
-
   const handleSuggestionClick = (name) => { // 👉 Handler for clicking a suggestion
-    setSubreddit(name); // 👉 Set subreddit input to clicked suggestion
+    setSubreddit(name.replace(/^r\//, '')); // 👉 Set subreddit input to clicked suggestion
     setSubredditSuggestions([]); // 👉 Clear suggestions (optional: could hide instead)
     setIsTyping(false);  // User clicked a suggestion — disable fetch
   };
 
+  const dispatch = useDispatch();
+  const { results, isLoading, error } = useSelector((state) => state.results);
+
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    //fetch logic
-    // fetch results
+    dispatch(fetchResults({ searchedTerm, subreddit }));
   }
 
   return (
@@ -105,34 +108,40 @@ function App() {
       <div className='Content-Body'>
         <div className="Result-Header">
           <h2>Results</h2>
-          <select className='Sort-Dropdown'> 
+          <select className='Sort-Dropdown' value={sort} onChange={(e) => setSort(e.target.value)}> 
               <option value="hot">🔥 Hot</option>
               <option value="new">📰 New</option>
               <option value="top">🏆 Top</option>
               <option value="controversial">🗣 Controversial</option>
               <option value="rising">⬆️ Rising</option>
-            </select>
+          </select>
         </div>
 
-        <div className='Result-Card'>
-          <p className='Result-Subreddit'>r/Subreddit</p>
-          <h3>Title</h3>
-          <div className='Result-Details'>
-            <p>0 Upvotes</p>
-            <p>||</p>
-            <p>0 Comments</p>
-          </div>
-        </div>
+        {isLoading && <p>Loading posts...</p>}
+        {error && <p className="Error">{error}</p>}
+        {results.length === 0 && !isLoading && !error && <p>No results found</p>}
 
-        <div className='Result-Card'>
-          <p className='Result-Subreddit'>r/Subreddit</p>
-          <h3>Title</h3>
-          <div className='Result-Details'>
-            <p>0 Upvotes</p>
-            <p>||</p>
-            <p>0 Comments</p>
-          </div>
-        </div>
+        {[...results]
+          .sort((a, b) => {
+            if (sort === "hot" || sort === "top") {
+              return b.ups - a.ups; // sort by upvotes desc
+            } else if (sort === "new" || sort === "rising") {
+              return b.num_comments - a.num_comments; // sort by comments desc as a placeholder
+            } else {
+              return 0; // fallback: no sort change
+            }
+          })
+          .map((result, index) => (
+            <div key={index} className='Result-Card'>
+              <p className='Result-Subreddit'>{result.subreddit}</p>
+              <h3>{result.title}</h3>
+              <div className='Result-Details'>
+                <p>{result.ups} 👍🏻👍🏽</p>
+                <p>||</p>
+                <p>{result.num_comments} 💬 comments</p>
+              </div>
+            </div>
+        ))}
 
       </div>
     </div>

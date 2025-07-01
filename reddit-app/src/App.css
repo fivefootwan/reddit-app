@@ -148,6 +148,12 @@
   justify-content: space-between;
 }
 
+.Sort-Dropdown {
+  height: 35px;
+  border-radius: 10px;
+  padding: 2.5px;
+}
+
 .Result-Card {
   width: 65%;
   min-width: 380px;
