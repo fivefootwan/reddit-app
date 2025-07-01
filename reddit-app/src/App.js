@@ -64,10 +64,10 @@ function App() {
       <header className="App-header">
         <h1>Reddit App</h1>
         <form className='Search-Bar'>
-          <input placeholder="Enter Keyword" className='Search-Input' value={searchedTerm} onChange={(e) => setSearchedTerm(e.target.value)}/>
+          <input className='Search-Input' placeholder="Enter Keyword" value={searchedTerm} onChange={(e) => setSearchedTerm(e.target.value)}/>
           <div className='Subreddit'>
             <input 
-              placeholder='(Optional) Search a SubReddit' 
+              placeholder='Search in SubReddit' 
               className='Subreddit-Input' 
               value={subreddit} 
               onChange={(e) => {
@@ -75,19 +75,21 @@ function App() {
                   setIsTyping(true);  // User is typing — enable fetch
                 }} /> {/* User is typing — enable fetch*/}
 
-            <div className="Subreddit-Suggestions"> {/* Suggestions Render */}
-            {isSubredditLoading && <p>Loading suggestions...</p>}
-            {subredditError && <p className="Error">{subredditError}</p>}
-            {subredditSuggestions.length > 0 &&
-            subredditSuggestions.map((name) => (
-              <p 
-                key={name}
-                onClick={() => handleSuggestionClick(name)}
-                style={{ cursor: "pointer" }}
-              >{name}</p>
-            ))
-          }
-          </div>
+            {(isSubredditLoading || subredditError || subredditSuggestions.length > 0) && (
+              <div className="Subreddit-Suggestions">
+                {isSubredditLoading && <p>Loading suggestions...</p>}
+                {subredditError && <p className="Error">{subredditError}</p>}
+                {subredditSuggestions.map((name) => (
+                  <p 
+                    key={name}
+                    onClick={() => handleSuggestionClick(name)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {name}
+                  </p>
+                ))}
+              </div>
+            )}
           </div>
           <button type="submit" className="Search-Button">Search</button>
         </form>

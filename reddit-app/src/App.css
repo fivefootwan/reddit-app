@@ -42,27 +42,74 @@
   display: flex;
   gap: 10px;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 20px;
 }
 
 .Search-Input {
-  width: 55%;
+  width: 50%;
   min-width: 200px;
   font-size: 16px;
-  border-radius: 10px;
+  border-radius: 10px; 
 }
 
-.Search-Dropdown {
-  min-height: 5vh;
-  border-radius: 10px;
+.Subreddit {
+  position: relative; /* parent positioned, so child absolute works */
+  width: 20%; /* Adjust this to balance with Search-Input and Search-Button visually */
+  min-width: 120px; /* Prevent it from getting too tiny */
+  display: flex;          /* ✅ Make the wrapper align its content cleanly */
+  align-items: center;    /* ✅ Center the input vertically within the wrapper */
 }
 
 .Subreddit-Input{
-  width: 18%;
-  min-width: 80px;
+  width: 100%;
+  min-width: 60px;
   font-size: 16px;
   border-radius: 10px;
+  text-align: center;
+}
+
+/* STANDARDIZE HEIGHTS */
+.Subreddit-Input, .Search-Input, .Search-Button {
+  box-sizing: border-box; /* make height include padding + border */
+  padding: 0; /* remove extra space inside */
+  border: none; /* remove default browser border (or define your own) */
+  height: 30px;
+}
+
+/* ADD BORDERS TO ALL 3*/
+.Search-Input, .Subreddit-Input, .Search-Button {
+  border: 1px solid #ccc; /* or your choice */
+}
+
+.Subreddit-Suggestions { /* making it float */
+  position: absolute; /* take out of normal flow, overlay style */
+  top: 100%; /* position just below the input */
+  left: 0; /* align left with the input */
+  width: 100%; /* match the input width */
+  background: white; /* or whatever background you want */
+  border: 1px solid #ccc; /* border like a dropdown */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* subtle shadow for depth */
+  z-index: 10; /* make sure it floats above other elements */
+  max-height: 200px; /* optional: limit height so it scrolls if too many items */
+  overflow-y: auto; /* enable scroll if needed */
+  font-size: 13px;
+  color: grey;
+  text-align: left;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.Subreddit-Suggestions p {
+  margin: 0;
+  padding: 8px 12px;
+  cursor: pointer;
+  white-space: normal; /* ✅ allow text to wrap */
+  word-break: break-word; /* ✅ break long words if needed */
+}
+
+.Subreddit-Suggestions p:hover {
+  background: #f0f0f0; /* hover effect */
 }
 
 .Search-Button {
@@ -73,6 +120,8 @@
   font-weight: 700;
   box-shadow: inset 0 -5px 10px rgb(128, 128, 128, 0.8);
   cursor: pointer;
+  box-sizing: border-box; /* ensure height includes border + padding */
+  padding: 0; /* remove default button padding */
 }
 
 .Search-Button:hover {
