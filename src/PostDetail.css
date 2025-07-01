@@ -1,0 +1,32 @@
+.PostDetail {
+    padding: 5vw;
+}
+
+.Subreddit {
+    background-color: aquamarine;
+}
+
+.OP-Content {
+    border-radius: 10px;
+    border: 1px solid black;
+    width: calc(100vw - 20vw);
+}
+
+.Comments {
+    background-color: white;
+    text-align: left;
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+.Comment, .Comment p {
+    background-color: blueviolet;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.Comment-Divider {
+    height: 1px;          /* thickness */
+    background-color: black; 
+    border: none;
+}

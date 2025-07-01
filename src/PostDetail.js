@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import './App.css';
+import './PostDetail.css';
 
 const PostDetail = () => {
   const { subreddit, postId } = useParams(); // ✅ get from URL
@@ -32,22 +34,28 @@ const PostDetail = () => {
 
   return (
     <div className="PostDetail">
-      <p>{post.subreddit_name_prefixed}</p>
+      
       <h2>{post.title}</h2>
 
-      {post.selftext && <p>{post.selftext}</p>} {/* 👉 Show OP's actual content (selftext) */}
+      <div className="OP-Content">
+        {post.selftext && <p>{post.selftext}</p>} {/* 👉 Show OP's actual content (selftext) */}
+      </div> 
 
-      <p>{post.ups} 👍🏻 | {post.num_comments} 💬 comments | <a href={`https://www.reddit.com${post.permalink}`} target="_blank" rel="noopener noreferrer"> {/* 👉 Link to Reddit page */}
+      <p className='Post-Detail'>
+        {post.subreddit_name_prefixed} | {post.ups} 👍🏻 | {post.num_comments} 💬 comments | <a href={`https://www.reddit.com${post.permalink}`} target="_blank" rel="noopener noreferrer"> {/* 👉 Link to Reddit page */}
         View on Reddit
       </a></p>
 
       <div className="Comments">
         {comments.map((comment, i) => (
           <div key={i}>
-            <p><strong>{comment.author}</strong>: {comment.body}</p>
+            <p className='Comment'><strong>{comment.author}</strong>: {comment.body}</p>
+            <hr className='Comment-Divider'></hr>
           </div>
         ))}
       </div>
+
+
     </div>
   );
 };
