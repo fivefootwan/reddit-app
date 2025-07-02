@@ -154,9 +154,9 @@ function App() {
                     <p className='Result-Subreddit'>{result.subreddit}</p>
                     <h3>{result.title}</h3>
                     <div className='Result-Details'>
-                      <p>{result.ups} 👍🏻👍🏽</p>
+                      <p>{result.ups.toLocaleString()} 👍🏻👍🏽</p>
                       <p>||</p>
-                      <p>{result.num_comments} 💬 comments</p>
+                      <p>{result.num_comments.toLocaleString()} 💬 comments</p>
                       <p>||</p>
                       <p className='Result-Post'>
                       Posted on: {new Date(result.posted_date * 1000).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}

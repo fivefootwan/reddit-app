@@ -21,6 +21,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  width: 100vw;
 }
 
 .App-link {
@@ -44,6 +45,8 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  padding: 0 10%;
 }
 
 .Search-Input {
@@ -51,6 +54,7 @@
   min-width: 200px;
   font-size: 16px;
   border-radius: 10px; 
+  padding-left: 15px;
 }
 
 .Subreddit {
@@ -72,7 +76,6 @@
 /* STANDARDIZE HEIGHTS */
 .Subreddit-Input, .Search-Input, .Search-Button {
   box-sizing: border-box; /* make height include padding + border */
-  padding: 0; /* remove extra space inside */
   border: none; /* remove default browser border (or define your own) */
   height: 30px;
 }
@@ -113,7 +116,7 @@
 }
 
 .Search-Button {
-  width: 10%;
+  width: 8%;
   min-width: 80px;
   font-size: 16px;
   border-radius: 10px;
@@ -134,11 +137,13 @@
   flex-direction: column;
   gap: 10px;
   justify-content: center;
-  align-items:flex-start;
+  align-items:stretch;
   margin-bottom: 20px;
   margin-top: 20px;
   padding-left: 10%;
-  padding-right: 10%
+  padding-right: 10%;
+  box-sizing: border-box; 
+  width: 100%;
 }
 
 .Result-Header {
@@ -146,6 +151,7 @@
   gap: 20px;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .Sort-Dropdown {
@@ -155,8 +161,7 @@
 }
 
 .Result-Card {
-  width: 55vw;
-  min-width: 380px;
+  width: 100%;
   border: 1px solid rgb(211, 211, 211);
   text-align: left;
   padding: 10px;
@@ -164,6 +169,7 @@
   border-radius: 15px;
   box-shadow: 0 10px 10px rgb(128, 128, 128, 0.5);
   transition: transform 0.2s ease;
+  box-sizing: border-box; 
 }
 
 .Result-Card:hover {

@@ -1,5 +1,5 @@
 .PostDetail {
-    padding: 5vw;
+    padding: 5vw 10%;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -21,6 +21,7 @@
     box-shadow: inset 0 -10px 15px rgb(90, 90, 90, 0.4),
     0 10px 15px rgb(90, 90, 90, 0.5);
     text-align: left;
+    line-height: 25px;
 }
 
 .Comments {
@@ -35,7 +36,7 @@
 }
 
 .Comment-Divider {
-    height: 1px;          /* thickness */
+    height: 0.5px;          /* thickness */
     background-color: darkgray; 
     border: none;
 }
