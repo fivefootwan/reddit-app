@@ -25,35 +25,35 @@ function App() {
     const [fetchCommentError, setFetchCommentError] = useState(null); // in case error and comment fetch is unsuccessful
 
   useEffect(() => { // 👉 run this effect whenever subreddit or isTyping changes
-  if (!subreddit || !isTyping) { // 👉 if input is empty or user selected a suggestion, skip fetch
-    setSubredditSuggestions([]); // 👉 clear any existing suggestions
-    setSubredditError(null); // 👉 reset any previous error
-    return; // 👉 exit early — no fetch needed
-  }
+    if (!subreddit || !isTyping) { // 👉 if input is empty or user selected a suggestion, skip fetch
+      setSubredditSuggestions([]); // 👉 clear any existing suggestions
+      setSubredditError(null); // 👉 reset any previous error
+      return; // 👉 exit early — no fetch needed
+    }
 
-  const debounceTimer = setTimeout(() => { // 👉 set up debounce timer (300ms delay)
-    setIsSubredditLoading(true); // 👉 show loading state
-    setSubredditError(null); // 👉 clear any old error
+    const debounceTimer = setTimeout(() => { // 👉 set up debounce timer (300ms delay)
+      setIsSubredditLoading(true); // 👉 show loading state
+      setSubredditError(null); // 👉 clear any old error
 
-    fetch(`https://www.reddit.com/subreddits/search.json?q=${subreddit}`) // 👉 call Reddit API with current input
-      .then((res) => {
-        if (!res.ok) throw new Error(`API error: ${res.status}`); // 👉 if API responds with error code, throw
-        return res.json(); // 👉 parse JSON if response is ok
-      })
-      .then((data) => {
-        const suggestions = data.data.children.map( // 👉 extract subreddit names from API response
-          (child) => child.data.display_name_prefixed // 👉 get subreddit name with r/ prefix
-        );
-        setSubredditSuggestions(suggestions); // 👉 save suggestions to state
-        setIsSubredditLoading(false); // 👉 stop loading indicator
-      })
-      .catch(() => {
-        setSubredditError("Could not fetch subreddits"); // 👉 save error message on failure
-        setIsSubredditLoading(false); // 👉 stop loading indicator
-      });
-  }, 300); // 👉 300ms debounce delay
+      fetch(`https://www.reddit.com/subreddits/search.json?q=${subreddit}`) // 👉 call Reddit API with current input
+        .then((res) => {
+          if (!res.ok) throw new Error(`API error: ${res.status}`); // 👉 if API responds with error code, throw
+          return res.json(); // 👉 parse JSON if response is ok
+        })
+        .then((data) => {
+          const suggestions = data.data.children.map( // 👉 extract subreddit names from API response
+            (child) => child.data.display_name_prefixed // 👉 get subreddit name with r/ prefix
+          );
+          setSubredditSuggestions(suggestions); // 👉 save suggestions to state
+          setIsSubredditLoading(false); // 👉 stop loading indicator
+        })
+        .catch(() => {
+          setSubredditError("Could not fetch subreddits"); // 👉 save error message on failure
+          setIsSubredditLoading(false); // 👉 stop loading indicator
+        });
+    }, 300); // 👉 300ms debounce delay
 
-  return () => clearTimeout(debounceTimer); // 👉 cleanup: clear timer if input changes before timer fires
+    return () => clearTimeout(debounceTimer); // 👉 cleanup: clear timer if input changes before timer fires
 }, [subreddit, isTyping]); // 👉 run effect when subreddit or isTyping changes
 
   const handleSuggestionClick = (name) => { // 👉 Handler for clicking a suggestion
@@ -64,7 +64,6 @@ function App() {
 
   const dispatch = useDispatch();
   const { results, isLoading, error } = useSelector((state) => state.results);
-
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -132,8 +131,10 @@ function App() {
                 .sort((a, b) => {
                   if (sort === "hot" || sort === "top") {
                     return b.ups - a.ups; // sort by upvotes desc
-                  } else if (sort === "new" || sort === "rising") {
+                  } else if (sort === "rising") {
                     return b.num_comments - a.num_comments; // sort by comments desc as a placeholder
+                  } else if (sort === "new") {
+                    return b.posted_date - a.posted_date;
                   } else {
                     return 0; // fallback: no sort change
                   }
@@ -150,6 +151,10 @@ function App() {
                       <p>{result.ups} 👍🏻👍🏽</p>
                       <p>||</p>
                       <p>{result.num_comments} 💬 comments</p>
+                      <p>||</p>
+                      <p className='Result-Post'>
+                      Posted on: {new Date(result.posted_date * 1000).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}
+                    </p>
                     </div>
                   </div>
                   </Link>

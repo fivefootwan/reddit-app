@@ -35,7 +35,7 @@ const PostDetail = () => {
   return (
     <div className="PostDetail">
       
-      <h2>{post.title}</h2>
+      <h2 className='Post-Title'>{post.title}</h2>
 
       <div className="OP-Content">
         {post.selftext && <p>{post.selftext}</p>} {/* 👉 Show OP's actual content (selftext) */}

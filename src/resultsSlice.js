@@ -22,7 +22,8 @@ export const fetchResults = createAsyncThunk(
         subreddit: child.data.subreddit_name_prefixed, // e.g. r/javascript  
         title: child.data.title, // post title  
         ups: child.data.ups, // upvote count  
-        num_comments: child.data.num_comments // comment count  
+        num_comments: child.data.num_comments, // comment count  
+        posted_date: child.data.created_utc
       }));  
     } catch (err) {  
       return thunkAPI.rejectWithValue(err.message); // handle network or parsing error  
