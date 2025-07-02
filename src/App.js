@@ -6,6 +6,7 @@ import { fetchResults } from './resultsSlice';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import PostDetail from './PostDetail.js';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
   //resultsSlice
@@ -64,17 +65,22 @@ function App() {
 
   const dispatch = useDispatch();
   const { results, isLoading, error } = useSelector((state) => state.results);
+  const navigate = useNavigate();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
+    navigate("/"); // 🔑 this ensures you go back to the home page
     dispatch(fetchResults({ searchedTerm, subreddit }));
   }
 
   return (
-    <Router>
       <div className="App">
         <div className="App-header">
-          <h1>Reddit App</h1>
+          <h1>
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}> {/* lead to homepage */}
+              Reddit App
+            </Link>
+          </h1>
           <form className='Search-Bar' onSubmit={handleSearchSubmit}>
             <input className='Search-Input' placeholder="Enter Keyword" value={searchedTerm} onChange={(e) => setSearchedTerm(e.target.value)}/>
             <div className='Subreddit'>
@@ -166,7 +172,6 @@ function App() {
           <Route path="/post/:subreddit/:postId" element={<PostDetail />} />
         </Routes>
       </div>
-    </Router>
     )
 };
 

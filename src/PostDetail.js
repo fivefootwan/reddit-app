@@ -38,8 +38,24 @@ const PostDetail = () => {
       <h2 className='Post-Title'>{post.title}</h2>
 
       <div className="OP-Content">
-        {post.selftext && <p>{post.selftext}</p>} {/* 👉 Show OP's actual content (selftext) */}
-      </div> 
+        {post.selftext ? (
+          <p>{post.selftext}</p>  // ✅ Show text if present
+        ) : (
+          // ✅ If no text, check for media
+          <>
+            {post.url && (post.url.endsWith('.jpg') || post.url.endsWith('.png') || post.url.endsWith('.gif')) && (
+              <img src={post.url} alt="Post media" className="Post-Media" />
+            )}
+
+            {post.url && post.url.includes('v.redd.it') && (
+              <video controls className="Post-Media">
+                <source src={post.url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            )}
+          </>
+        )}
+      </div>
 
       <p className='Post-Detail'>
         {post.subreddit_name_prefixed} | {post.ups} 👍🏻 | {post.num_comments} 💬 comments | <a href={`https://www.reddit.com${post.permalink}`} target="_blank" rel="noopener noreferrer"> {/* 👉 Link to Reddit page */}
@@ -47,7 +63,9 @@ const PostDetail = () => {
       </a></p>
 
       <div className="Comments">
-        {comments.map((comment, i) => (
+        {comments
+        .filter(comment => comment.body)
+        .map((comment, i) => (
           <div key={i}>
             <p className='Comment'><strong>{comment.author}</strong>: {comment.body}</p>
             <hr className='Comment-Divider'></hr>
